@@ -1,4 +1,4 @@
 #!/bin/bash
-docker run -d --name sde_db -e POSTGRES_PASSWORD=@sde_password012 -e POSTGRES_USER=test_sde -e POSTGRES_DB=demo -p 6543:5432 -v ./sde_school_project/sde_test_db/sql/init_db:/var/lib/pgsql/data postgres:14.2;
+docker run -d --name sde_db -e POSTGRES_PASSWORD=@sde_password012 -e POSTGRES_USER=test_sde -e POSTGRES_DB=demo -p 6543:5432 -v ./sde_test_db/sql/init_db:/var/lib/pgsql/data postgres:14.2;
 sleep 5;
 docker exec sde_db psql -U test_sde -d demo -f //var/lib/pgsql/data/demo.sql;
