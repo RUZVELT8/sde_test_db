@@ -3,7 +3,7 @@
 create table results 
 (id INT,
 responce TEXT
-)
+);
 
 
 /* Задача №1 1.	Вывести максимальное количество человек в одном бронировании */
@@ -17,7 +17,7 @@ from
 		from 
 			bookings b 
 		join tickets t on b.book_ref =t.book_ref 
-	group by b.book_ref) foo
+	group by b.book_ref) foo;
 	
 
 /* Задача №2 Вывести количество бронирований с количеством людей больше среднего значения людей на одно бронирование */
@@ -36,7 +36,7 @@ with pass_per_booking as (
 		from
 			pass_per_booking
 		where 
-			pass_per_booking.ticket_cnt > (select avg(ticket_cnt) from pass_per_booking)
+			pass_per_booking.ticket_cnt > (select avg(ticket_cnt) from pass_per_booking);
 			
 			
 	
@@ -76,7 +76,7 @@ with books as (
 		having  books.pass_cnt = count(distinct t2.passenger_name) 
 			)
 	insert into results (id, responce)
-	select 3 as id, count(distinct book_a) from books_compare
+	select 3 as id, count(distinct book_a) from books_compare;
 	
 
 /* Задача №4 Вывести номера брони и контактную информацию по пассажирам в брони (passenger_id, passenger_name, contact_data) с количеством людей в брони = 3 */
@@ -116,7 +116,7 @@ b as (
 		on 
 			b.book_ref = a.book_ref
 		where 
-			count_pass = 3
+			count_pass = 3;
 
 			
 /* Задача №5 Вывести максимальное количество перелётов на бронь */
@@ -150,7 +150,7 @@ select
 	5 as id,
 	max(fl_cnt_book.tickets_per_booking) as max_fl_per_booking
 from 
-	fl_cnt_book
+	fl_cnt_book;
 	
 	
 /* Задача №6 Вывести максимальное количество перелётов на пассажира в одной брони */
@@ -168,7 +168,7 @@ with a as (
 		select 
 			6 as id,
 			max(a.max_flights_per_booking) as max_flights_per_booking
-		from a
+		from a;
 
 		
 /* Задача №7 Вывести максимальное количество перелётов на пассажира 
@@ -188,7 +188,7 @@ with a as (
 		select 
 			7 as id,
 			max(a.max_flights_per_booking) as max_flights_per_booking
-		from a
+		from a;
 
 		
 /* Задача №8 Вывести контактную информацию по пассажиру(ам) (passenger_id, passenger_name, contact_data) и общие траты на билеты, для пассажира потратившему минимальное количество денег на перелеты */
@@ -214,7 +214,7 @@ with a as(
 		from 
 			a
 		where 
-			a.amount_sum = (select min(a.amount_sum) as min_amount_sum from a)
+			a.amount_sum = (select min(a.amount_sum) as min_amount_sum from a);
 
 
 /* Задача №9 Вывести контактную информацию по пассажиру(ам) (passenger_id, passenger_name, contact_data) и общее время в полётах, для пассажира, который провёл максимальное время в полётах */
@@ -242,7 +242,7 @@ insert into results (id, responce)
 select distinct 9 as id,
 	(a.passenger_id || ' | ' ||a.passenger_name || ' | ' ||a.contact_data||' | '||a."time on board") as "contact information"
 from a
-where a."time on board" = (select max(a."time on board") from a)
+where a."time on board" = (select max(a."time on board") from a);
 
 
 /* Задача №10 Вывести город(а) с количеством аэропортов больше одного */
@@ -255,7 +255,7 @@ from
 	airports a
 join 
 	airports a2 
-on a.city = a2.city and a.airport_code <> a2.airport_code 
+on a.city = a2.city and a.airport_code <> a2.airport_code;
 
 
 /* Задача №11 Вывести город(а), у которого самое меньшее количество городов прямого сообщения */
@@ -276,7 +276,7 @@ with a as(
 	from 
 			a
 	where 
-			a.routes_cnt = (select min(a.routes_cnt) from a)
+			a.routes_cnt = (select min(a.routes_cnt) from a);
 
 		
 /* Задача №12 Вывести пары городов, у которых нет прямых сообщений исключив реверсные дубликаты */
@@ -326,7 +326,7 @@ second_t as (
 	where 
 		st.id1 > st2.id1
 	order by 
-		st.start_point||'|'||st.end_point	
+		st.start_point||'|'||st.end_point;
 		
 		
 /* Задача №13 Вывести города, до которых нельзя добраться без пересадок из Москвы? */
@@ -349,7 +349,7 @@ with a as (
 	from 
 		a 
 	where 
-		a.city_cnt = 0
+		a.city_cnt = 0;
 
 
 /* Задача №14 Вывести модель самолета, который выполнил больше всего рейсов */
@@ -374,7 +374,7 @@ with model_c as (
 	from
 		model_c
 	where 
-		model_c.model_cnt = (select max(model_c.model_cnt) from model_c)
+		model_c.model_cnt = (select max(model_c.model_cnt) from model_c);
 		
 		
 /* Задача №15 Вывести модель самолета, который перевез больше всего пассажиров */
@@ -401,7 +401,7 @@ with bp_per_aircraft as (
 	 	from 
 	 		bp_per_aircraft
 	 	where 
-	 		bp_per_aircraft.total_pass_cnt = (select max(bp_per_aircraft.total_pass_cnt) from bp_per_aircraft )
+	 		bp_per_aircraft.total_pass_cnt = (select max(bp_per_aircraft.total_pass_cnt) from bp_per_aircraft );
 	 		
 	 		
 /* Задача №16 Вывести отклонение в минутах суммы запланированного времени перелета от фактического по всем перелётам */
@@ -420,7 +420,7 @@ select
 from 
 	flights_v fv 
 where 
-	fv.status in ('Arrived')
+	fv.status in ('Arrived');
 	
 	
 /* Задача №17 Вывести города, в которые осуществлялся перелёт из Санкт-Петербурга 2016-09-13 (Заменено на 2017-08-13) */
@@ -439,7 +439,7 @@ and
 and 
 	f.status = 'Arrived'
 order by 
-	f.arrival_city
+	f.arrival_city;
 	
 	
 /* Задача №18 Вывести перелёт(ы) с максимальной стоимостью всех билетов */
@@ -459,7 +459,7 @@ order by
  	from 
  		a
 	where 
-		a.full_ticket_amount = (select max(a.full_ticket_amount) from a)
+		a.full_ticket_amount = (select max(a.full_ticket_amount) from a);
 		
 		
 /* Задача №19 Выбрать дни в которых было осуществлено минимальное количество перелётов */
@@ -479,7 +479,7 @@ with a as (
 	from 
 		a 
 	where 
-		a.flight_cnt = (select min(a.flight_cnt) from a)
+		a.flight_cnt = (select min(a.flight_cnt) from a);
 		
 		
 /* Задача №20 Вывести среднее количество вылетов в день из Москвы за 09 месяц 2016 года (Заменено на 08 месяц 2017 года) */
@@ -493,7 +493,7 @@ from
 WHERE 
 	fv.departure_city = 'Москва'
 and 
-	fv.actual_departure::date between '2017-08-01'::date and '2017-08-31'::date
+	fv.actual_departure::date between '2017-08-01'::date and '2017-08-31'::date;
 	
 	
 /* Задача №21 Вывести топ 5 городов у которых среднее время перелета до пункта назначения больше 3 часов */
@@ -517,7 +517,7 @@ with a as(
 		a 
 	where 
 		a.minutes_delta > 180
-	limit 5
+	limit 5;
 
 
 
