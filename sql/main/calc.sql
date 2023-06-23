@@ -103,12 +103,11 @@ b as (
 		t.passenger_name, 
 		t.contact_data
 		)
---having count(t.passenger_id) = 3
 		insert into results (id, responce)
 		select 
 			4 as id,
 			b.book_ref || ' | ' ||
-			(b.passenger_id || ' | ' || b.passenger_name  || ' | ' ||b.contact_data) as contact_info
+			array_agg(b.passenger_id || ' | ' || b.passenger_name  || ' | ' ||b.contact_data) as contact_info
 		from 
 			b 
 		join 
@@ -116,7 +115,8 @@ b as (
 		on 
 			b.book_ref = a.book_ref
 		where 
-			count_pass = 3;
+			count_pass = 3
+		group by b.book_ref;
 
 			
 /* Задача №5 Вывести максимальное количество перелётов на бронь */
